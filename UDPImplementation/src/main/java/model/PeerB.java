@@ -1,41 +1,34 @@
-package model;
+package main.java.model;
 
-import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
-import java.net.SocketException;
+import main.java.util.UDPConnection;
+import java.util.Scanner;
 
 public class PeerB {
+
+    public static final Scanner sc = new Scanner(System.in);
+
+
     public static void main(String[] args) {
+        UDPConnection connection = UDPConnection.getInstance();
+        // puerto de escucha | recepción
+        connection.setPort(3489);
 
-        try {
-            // socket habilita la capacidad de escuchar por este puerto
-            DatagramSocket socket = new DatagramSocket(5001);
+        String ipDest = "127.0.0.1";
 
-            // empaquetador de la información
-            //                                         un arreglo de bytes | tamaño
-            DatagramPacket packet = new DatagramPacket(new byte[16], 16);
+        connection.start();
 
-            System.out.println("Waiting ....");
-            // recivir la información, y almacenarla en el paquete
-            socket.receive(packet);
+        while (true) {
+            // se inicializa el hilo de escucha | hilo de recepción
 
-            // decodificando la información
-            //String msj = new String(packet.getData()).trim();
-            //System.out.println(msj);
+            System.out.println("Ingrese el mensaje a enviar: ");
+            String mensaje = sc.nextLine();
 
-            // forma alternativa de decodificar el mensaje
-            for (byte b : packet.getData()){
-                System.out.print(Character.toString((char) b));
+            //puerto de envio
+            connection.sendDatagram(mensaje, ipDest, 3490);
+
+            if (mensaje.equals("exit")) {
+                break;
             }
-
-
-        } catch (SocketException e) {
-
-        } catch (IOException e) {
-
         }
-
-
     }
 }

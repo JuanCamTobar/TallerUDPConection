@@ -1,4 +1,4 @@
-package util;
+package main.java.util;
 
 import java.io.IOException;
 import java.net.*;
@@ -36,11 +36,14 @@ public class UDPConnection extends Thread {
 
             System.out.println("Waiting ....");
             // recivir la información, y almacenarla en el paquete
-            this.socket.receive(packet);
 
-            // decodificando la información
-            String msj = new String(packet.getData()).trim();
-            System.out.println(msj);
+            while (true) {
+                this.socket.receive(packet);
+
+                // decodificando la información
+                String msj = new String(packet.getData()).trim();
+                System.out.println( "(" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + ") "+ msj + "\n");
+            }
 
         } catch (SocketException e) {
 
