@@ -1,9 +1,9 @@
-package main.java.model;
+package ui;
 
 import main.java.util.UDPConnection;
 import java.util.Scanner;
 
-public class PeerB {
+public class PeerA {
 
     public static final Scanner sc = new Scanner(System.in);
 
@@ -11,10 +11,9 @@ public class PeerB {
     public static void main(String[] args) {
         UDPConnection connection = UDPConnection.getInstance();
         // puerto de escucha | recepción
-        connection.setPort(3489);
+        connection.setPort(3490);
 
-        String ipDest = "127.0.0.1";
-
+        String ipDest = "192.168.20.17";
         connection.start();
 
         while (true) {
@@ -24,9 +23,10 @@ public class PeerB {
             String mensaje = sc.nextLine();
 
             //puerto de envio
-            connection.sendDatagram(mensaje, ipDest, 3490);
+            connection.sendDatagram(mensaje, ipDest, 3489);
 
             if (mensaje.equals("exit")) {
+                connection.stopConnection();
                 break;
             }
         }

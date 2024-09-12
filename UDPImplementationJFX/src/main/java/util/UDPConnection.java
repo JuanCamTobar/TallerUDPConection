@@ -7,6 +7,8 @@ public class UDPConnection extends Thread {
 
     private DatagramSocket socket;
 
+    private volatile boolean running = true;
+
     private static UDPConnection instance;
 
     private UDPConnection () {}
@@ -36,10 +38,8 @@ public class UDPConnection extends Thread {
 
             System.out.println("Waiting ....");
             // recivir la información, y almacenarla en el paquete
-
             while (true) {
                 this.socket.receive(packet);
-
                 // decodificando la información
                 String msj = new String(packet.getData()).trim();
                 System.out.println( "(" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + ") "+ msj + "\n");
@@ -49,6 +49,17 @@ public class UDPConnection extends Thread {
 
         } catch (IOException e) {
 
+        }finally{
+            if (socket != null && !socket.isClosed()) {
+                socket.close();
+            }
+        }
+    }
+
+    public void stopConnection() {
+        running = false;
+        if (socket != null && !socket.isClosed()) {
+            socket.close();
         }
     }
 
