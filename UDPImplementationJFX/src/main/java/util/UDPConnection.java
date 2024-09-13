@@ -11,6 +11,8 @@ public class UDPConnection extends Thread {
 
     private static UDPConnection instance;
 
+    private String lastMessage="";
+
     private UDPConnection () {}
 
     public static UDPConnection getInstance(){
@@ -36,14 +38,14 @@ public class UDPConnection extends Thread {
             //                                         un arreglo de bytes | tamaño
             DatagramPacket packet = new DatagramPacket(new byte[24], 24);
 
-            System.out.println("Waiting ....");
             // recivir la información, y almacenarla en el paquete
-            while (true) {
+            while (running) {
                 this.socket.receive(packet);
                 // decodificando la información
                 String msj = new String(packet.getData()).trim();
-                System.out.println( "(" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + ") "+ msj + "\n");
+                lastMessage="(" + packet.getAddress().getHostAddress() + ":" + packet.getPort() + ") "+ msj + "\n";
             }
+
 
         } catch (SocketException e) {
 
@@ -56,12 +58,6 @@ public class UDPConnection extends Thread {
         }
     }
 
-    public void stopConnection() {
-        running = false;
-        if (socket != null && !socket.isClosed()) {
-            socket.close();
-        }
-    }
 
     public void sendDatagram(String msj, String ipDest, int portDest){
         // Envio de Infromación
@@ -82,4 +78,11 @@ public class UDPConnection extends Thread {
         }
     }
 
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
 }

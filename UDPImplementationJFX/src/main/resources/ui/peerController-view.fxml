@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.collections.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="CENTER" prefHeight="287.0" prefWidth="330.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PeerController">
+<VBox alignment="CENTER" prefHeight="305.0" prefWidth="341.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ui.PeerController">
     <children>
         <Label text="UDP CONECTION" textAlignment="CENTER">
             <font>
@@ -18,12 +16,6 @@
          <children>
               <Label text="Selecciona que peer seras" />
               <ChoiceBox fx:id="peerChoiceBox" prefWidth="150.0">
-                  <items>
-                      <FXCollections fx:factory="observableArrayList">
-                          <String fx:value="Peer A" />
-                          <String fx:value="Peer B" />
-                      </FXCollections>
-                  </items>
                <opaqueInsets>
                   <Insets top="10.0" />
                </opaqueInsets>
@@ -45,7 +37,7 @@
                         <Insets right="20.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField alignment="CENTER">
+                  <TextField fx:id="ipDest" alignment="CENTER">
                      <opaqueInsets>
                         <Insets left="10.0" />
                      </opaqueInsets>
@@ -55,17 +47,17 @@
                   <Insets left="10.0" right="10.0" />
                </opaqueInsets>
                <VBox.margin>
-                  <Insets left="10.0" right="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </VBox.margin>
             </HBox>
               <HBox alignment="CENTER" prefHeight="35.0" prefWidth="310.0">
                   <children>
-                      <Label text="Puerto">
+                      <Label text="Puerto Destino">
                           <HBox.margin>
                               <Insets right="20.0" />
                           </HBox.margin>
                       </Label>
-                      <TextField alignment="CENTER">
+                      <TextField fx:id="puertoDes" alignment="CENTER">
                           <opaqueInsets>
                               <Insets left="10.0" />
                           </opaqueInsets>
@@ -75,13 +67,30 @@
                       <Insets left="10.0" right="10.0" />
                   </opaqueInsets>
                   <VBox.margin>
-                      <Insets left="10.0" right="10.0" />
+                      <Insets bottom="10.0" left="10.0" right="10.0" />
                   </VBox.margin>
               </HBox>
+            <HBox alignment="CENTER" layoutX="20.0" layoutY="53.0" prefHeight="35.0" prefWidth="310.0">
+               <children>
+                  <Label text="Puerto Local">
+                     <HBox.margin>
+                        <Insets right="20.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="puertoLoc" alignment="CENTER">
+                     <opaqueInsets>
+                        <Insets left="10.0" />
+                     </opaqueInsets>
+                  </TextField>
+               </children>
+               <opaqueInsets>
+                  <Insets left="10.0" right="10.0" />
+               </opaqueInsets>
+            </HBox>
          </children>
          <VBox.margin>
             <Insets left="10.0" right="10.0" />
          </VBox.margin></VBox>
-      <Button mnemonicParsing="false" text="Siguiente" />
+      <Button mnemonicParsing="false" onAction="#connect" text="Siguiente" fx:id="botonSiguiente"/>
     </children>
 </VBox>
